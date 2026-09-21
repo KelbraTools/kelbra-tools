@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Traductor + pronunciación — Kelbra Tools</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="wrap wrap-wide">
+<header class="site-head">
+<a class="logo" href="index.html">Kelbra<span>.</span>Tools</a>
+<div class="tagline">Traductor + pronunciación</div>
+</header>
+
+
+<a href="index.html" class="back-link">← Volver a herramientas</a>
+
+
+<div class="tool-notice">
+  Estas herramientas funcionan por completo en tu navegador. La calidad de la traducción depende de un servicio externo gratuito y puede no ser perfecta en todos los casos. Úsalas como ayuda, no como resultado final.
+</div>
+
+
+<h1 class="tool-title">Traductor + pronunciación</h1>
+<p class="lead">
+  Escribe o pega tu texto, elige el idioma destino y escucha cómo suena.
+  Ambas hojas son editables. Todo funciona en tu navegador.
+</p>
+
+
+<div class="ad-slot">[ espacio reservado para anuncio ]</div>
+
+
+<div class="panel-controls">
+<label class="select-label">De:
+<select id="fromLang">
+<option value="es" selected>Español</option>
+<option value="en">Inglés</option>
+<option value="en-GB">Inglés (Reino Unido)</option>
+<option value="pt">Portugués</option>
+<option value="it">Italiano</option>
+<option value="fr">Francés</option>
+<option value="de">Alemán</option>
+<option value="zh-CN">Chino (Simplificado)</option>
+<option value="ja">Japonés</option>
+<option value="auto">Detectar idioma</option>
+</select>
+</label>
+<label class="select-label">A:
+<select id="toLang">
+<option value="en" selected>Inglés</option>
+<option value="en-GB">Inglés (Reino Unido)</option>
+<option value="es">Español</option>
+<option value="pt">Portugués</option>
+<option value="it">Italiano</option>
+<option value="fr">Francés</option>
+<option value="de">Alemán</option>
+<option value="zh-CN">Chino (Simplificado)</option>
+<option value="ja">Japonés</option>
+</select>
+</label>
+<button id="translateBtn" class="primary-btn">Traducir →</button>
+<button id="speakBtn" class="file-btn">🔊 Escuchar pronunciación</button>
+</div>
+
+
+<div class="translator-grid">
+<div class="translator-page">
+<div class="translator-page-header">TEXTO ORIGINAL</div>
+<textarea id="sourceText" placeholder="Escribe o pega aquí el texto original…"></textarea>
+</div>
+<div class="translator-page">
+<div class="translator-page-header">TRADUCCIÓN (editable)</div>
+<textarea id="targetText" placeholder="Aquí aparecerá la traducción… Puedes editarla o corregirla."></textarea>
+</div>
+</div>
+
+
+<p id="statusMsg" class="detected-msg"></p>
+<p id="errorMsg" class="error-msg"></p>
+</div>
+<script src="js/traductor.js"></script>
+</body>
+</html>

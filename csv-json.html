@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conversor de datos — Kelbra Tools</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+</head>
+<body>
+<div class="wrap">
+<header class="site-head">
+<a class="logo" href="index.html">Kelbra<span>.</span>Tools</a>
+<div class="tagline">Conversor de datos</div>
+</header>
+
+
+<a href="index.html" class="back-link">← Volver a herramientas</a>
+
+<div class="tool-notice">
+  Estas herramientas funcionan por completo en tu navegador. El resultado puede variar según el archivo original. Úsalas como ayuda práctica.
+</div>
+
+
+<h1 class="tool-title">Conversor CSV / JSON / XML / YAML</h1>
+<p class="lead">
+      Pega o importa tu archivo — el formato de entrada se detecta solo.
+      Elige a qué formato lo quieres convertir. Todo pasa en tu navegador, nada se sube a ningún servidor.
+</p>
+
+
+<div class="ad-slot">[ espacio reservado para anuncio ]</div>
+
+
+<div class="tool-panel">
+<div class="panel-controls">
+<label class="file-btn">
+          Importar archivo
+<input type="file" id="fileInput" accept=".csv,.json,.xml,.yaml,.yml,.txt,.html,.htm" hidden>
+</label>
+<label class="select-label">
+          Convertir a:
+<select id="targetFormat">
+<option value="json">JSON</option>
+<option value="csv">CSV</option>
+<option value="xml">XML</option>
+<option value="yaml">YAML</option>
+<option value="html">Tabla HTML</option>
+</select>
+</label>
+<button id="convertBtn" class="primary-btn">Convertir →</button>
+<button id="downloadBtn" class="file-btn" disabled>Descargar resultado</button>
+</div>
+
+
+<!-- Dos columnas grandes y bien espaciadas -->
+<div class="converter-grid">
+<div class="converter-col">
+<label class="col-label">ENTRADA</label>
+<textarea id="inputArea" placeholder="Pega aquí tu CSV, JSON, XML, YAML o tabla HTML…"></textarea>
+</div>
+<div class="converter-col">
+<label class="col-label">RESULTADO</label>
+<textarea id="outputArea" placeholder="Aquí aparecerá el resultado…" readonly></textarea>
+</div>
+</div>
+
+
+<p id="errorMsg" class="error-msg"></p>
+<p id="statusMsg" class="detected-msg"></p>
+</div>
+</div>
+
+
+<script src="js/csv-json.js"></script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Corrector de ortografía a PDF — Kelbra Tools</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+<div class="wrap wrap-wide">
+
+
+<header class="site-head">
+<a class="logo" href="index.html">Kelbra<span>.</span>Tools</a>
+<div class="tagline">Corrector de ortografía a PDF</div>
+</header>
+
+
+<a href="index.html" class="back-link">← Volver a herramientas</a>
+
+<div class="tool-notice">
+  Estas herramientas funcionan por completo en tu navegador. Este corrector arregla ortografía (palabras mal escritas, tildes, mayúsculas, espacios y puntuación), no gramática ni estilo. No sustituye una revisión humana.
+</div>
+
+
+<h1 class="tool-title">Corrector de ortografía a PDF</h1>
+<p class="lead">
+      Escribe o pega tu texto en páginas reales, corrige su ortografía y conviértelo en un documento PDF
+      profesional con encabezado, pie de página, numeración e imágenes.
+</p>
+
+
+<div class="ad-slot">[ espacio reservado para anuncio ]</div>
+
+
+<!-- Barra de herramientas principal -->
+<div class="toolbar" id="mainToolbar">
+<button type="button" data-cmd="bold" class="tbtn" title="Negrita"><b>B</b></button>
+<button type="button" data-cmd="italic" class="tbtn" title="Cursiva"><i>I</i></button>
+<button type="button" data-cmd="underline" class="tbtn" title="Subrayado"><u>U</u></button>
+
+
+<select id="fontFamily" class="tbtn" title="Fuente">
+<option value="Arial" selected>Arial</option>
+<option value="Times New Roman">Times New Roman</option>
+<option value="Georgia">Georgia</option>
+<option value="Courier New">Courier New</option>
+<option value="Verdana">Verdana</option>
+</select>
+
+
+<select id="fontSize" class="tbtn" title="Tamaño">
+<option value="2">10</option>
+<option value="3" selected>12</option>
+<option value="4">14</option>
+<option value="5">18</option>
+<option value="6">24</option>
+<option value="7">36</option>
+</select>
+
+
+<input type="color" id="fontColor" class="tbtn" value="#1b2430" title="Color de texto">
+
+
+<button type="button" data-cmd="justifyLeft" class="tbtn" title="Alinear izquierda">⫷</button>
+<button type="button" data-cmd="justifyCenter" class="tbtn" title="Centrar">☰</button>
+<button type="button" data-cmd="justifyRight" class="tbtn" title="Alinear derecha">⫸</button>
+<button type="button" data-cmd="justifyFull" class="tbtn" title="Justificar">▤</button>
+
+
+<button type="button" data-cmd="insertUnorderedList" class="tbtn" title="Lista con viñetas">• Lista</button>
+<button type="button" data-cmd="insertOrderedList" class="tbtn" title="Lista numerada">1. Lista</button>
+
+
+<button type="button" id="btnCleanText" class="tbtn" title="Corrige ortografía (mayúsculas, espacios, puntuación y palabras mal escritas) del texto seleccionado (o de toda la página si no seleccionas nada)">✨ Corregir ortografía</button>
+
+
+<button type="button" id="btnInsertImage" class="tbtn" title="Insertar imagen">🖼 Imagen</button>
+<input type="file" id="imageInput" accept="image/*" hidden>
+
+
+<button type="button" id="btnHeaderFooter" class="tbtn" title="Encabezado y numeración">Encabezado / Nº pág.</button>
+</div>
+
+
+<!-- Contenedor de páginas -->
+<div class="pages-container" id="pagesContainer">
+<!-- Las páginas se generan dinámicamente -->
+</div>
+
+
+<!-- Controles inferiores -->
+<div class="panel-controls" style="margin-top:20px;">
+<button type="button" id="btnAddPage" class="file-btn">+ Agregar página nueva</button>
+<button type="button" id="btnDeletePage" class="file-btn" title="Elimina la página donde está el cursor (o la última)" style="color:#c0392b;">🗑 Eliminar página</button>
+<button type="button" id="btnCropSelected" class="file-btn" title="Recorta libremente la imagen seleccionada">✂ Recortar imagen</button>
+<button type="button" id="btnDeleteSelected" class="file-btn" title="Elimina la imagen seleccionada" style="color:#c0392b;">🗑 Eliminar imagen</button>
+</div>
+
+
+<div class="extra-options">
+<label class="checkbox-label">
+<input type="checkbox" id="enableHeader"> Mostrar encabezado
+</label>
+<label class="checkbox-label">
+        Texto del encabezado:
+<input type="text" id="headerText" class="text-input" placeholder="Título del documento">
+</label>
+
+
+<label class="checkbox-label">
+<input type="checkbox" id="enableFooter" checked> Mostrar pie de página
+</label>
+<label class="checkbox-label">
+        Texto del pie:
+<input type="text" id="footerText" class="text-input" placeholder="Texto del pie de página">
+</label>
+
+
+<label class="checkbox-label">
+<input type="checkbox" id="enablePageNumbers" checked> Numeración de páginas
+</label>
+
+
+<label class="checkbox-label">
+        Nombre del archivo:
+<input type="text" id="fileName" class="text-input" placeholder="documento" value="documento">
+</label>
+</div>
+
+
+<button type="button" id="btnExportPDF" class="primary-btn" style="margin-top:16px;">Exportar como PDF</button>
+
+
+<p id="statusMsg" class="detected-msg" style="margin-top:12px;"></p>
+</div>
+
+
+<script src="js/typo.js"></script>
+<script src="js/cropper.js"></script>
+<script src="js/limpiador-texto-pdf.js"></script>
+</body>
+</html>

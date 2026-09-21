@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Editor de PDF — Kelbra Tools</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700&family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+<div class="wrap wrap-wide">
+<header class="site-head">
+<a class="logo" href="index.html">Kelbra<span>.</span>Tools</a>
+<div class="tagline">Editor de PDF</div>
+</header>
+
+
+<a href="index.html" class="back-link">← Volver a herramientas</a>
+
+<div class="tool-notice">
+  Estas herramientas funcionan por completo en tu navegador. La calidad del resultado puede variar según el documento y el navegador. Úsalas como ayuda práctica, no como resultado final garantizado.
+</div>
+
+<h1 class="tool-title">Editor de PDF</h1>
+<p class="lead" id="leadText">
+      Importa un PDF (su texto queda seleccionable y editable, no como imagen) y expórtalo de nuevo con formato profesional.
+</p>
+
+
+<div class="ad-slot">[ espacio reservado para anuncio ]</div>
+
+
+<div class="panel-controls">
+<label class="file-btn">
+        Importar PDF
+<input type="file" id="pdfInput" accept="application/pdf" hidden>
+</label>
+</div>
+
+
+<div class="toolbar" id="mainToolbar">
+<button type="button" data-cmd="bold" class="tbtn" title="Negrita"><b>B</b></button>
+<button type="button" data-cmd="italic" class="tbtn full-only" title="Cursiva"><i>I</i></button>
+<button type="button" data-cmd="underline" class="tbtn full-only" title="Subrayado"><u>U</u></button>
+<button type="button" data-cmd="strikeThrough" class="tbtn full-only" title="Tachado"><s>S</s></button>
+<button type="button" data-cmd="superscript" class="tbtn full-only" title="Superíndice">x²</button>
+<button type="button" data-cmd="subscript" class="tbtn full-only" title="Subíndice">x₂</button>
+
+
+<select id="fontFamily" class="tbtn" title="Tipo de letra">
+<option value="Arial" selected>Arial</option>
+<option value="Times New Roman">Times New Roman</option>
+<option value="Georgia">Georgia</option>
+<option value="Courier New">Courier New</option>
+<option value="Verdana">Verdana</option>
+</select>
+<select id="fontSize" class="tbtn" title="Tamaño de letra">
+<option value="2">10</option>
+<option value="3" selected>12</option>
+<option value="4">14</option>
+<option value="5">18</option>
+<option value="6">24</option>
+<option value="7">36</option>
+</select>
+<input type="color" id="fontColor" class="tbtn" value="#1b2430" title="Color de texto">
+<input type="color" id="hiliteColor" class="tbtn full-only" value="#fff59d" title="Resaltar texto">
+
+
+<button type="button" data-cmd="justifyLeft" class="tbtn" title="Izquierda">⫷</button>
+<button type="button" data-cmd="justifyCenter" class="tbtn" title="Centrar">☰</button>
+<button type="button" data-cmd="justifyRight" class="tbtn" title="Derecha">⫸</button>
+<button type="button" data-cmd="justifyFull" class="tbtn" title="Justificar">▤</button>
+
+
+<button type="button" data-cmd="insertUnorderedList" class="tbtn full-only">• Lista</button>
+<button type="button" data-cmd="insertOrderedList" class="tbtn full-only">1. Lista</button>
+<button type="button" data-cmd="indent" class="tbtn full-only" title="Aumentar sangría">→</button>
+<button type="button" data-cmd="outdent" class="tbtn full-only" title="Reducir sangría">←</button>
+<button type="button" id="btnLink" class="tbtn full-only" title="Insertar enlace">🔗</button>
+<button type="button" id="btnUnlink" class="tbtn full-only" title="Quitar enlace">🔗✕</button>
+<button type="button" data-cmd="insertHorizontalRule" class="tbtn full-only" title="Línea horizontal">―</button>
+<button type="button" id="btnClearFormat" class="tbtn full-only" title="Quitar formato">Ⓧ Formato</button>
+
+
+<button type="button" id="btnInsertImage" class="tbtn full-only">🖼 Importar imagen</button>
+<input type="file" id="imageInput" accept="image/*" hidden>
+<button type="button" id="btnHeaderFooter" class="tbtn">Encabezado / Nº pág.</button>
+</div>
+
+
+<div class="pages-container" id="pagesContainer"></div>
+
+
+<div class="panel-controls" style="margin-top:16px;">
+<button type="button" id="btnAddPage" class="file-btn">+ Agregar página</button>
+<button type="button" id="btnDeletePage" class="file-btn" title="Elimina la página donde está el cursor (o la última)" style="color:#c0392b;">🗑 Eliminar página</button>
+<button type="button" id="btnCropSelected" class="file-btn" title="Recorta libremente la imagen seleccionada">✂ Recortar imagen</button>
+<button type="button" id="btnDeleteSelected" class="file-btn" title="Elimina la imagen seleccionada" style="color:#c0392b;">🗑 Eliminar imagen</button>
+</div>
+
+
+<div class="extra-options">
+<label class="checkbox-label">
+<input type="checkbox" id="enableHeader"> Mostrar encabezado
+</label>
+<label class="checkbox-label">
+        Texto del encabezado:
+<input type="text" id="headerText" class="text-input" placeholder="Título del documento">
+</label>
+<label class="checkbox-label">
+<input type="checkbox" id="enableFooter" checked> Mostrar pie de página
+</label>
+<label class="checkbox-label">
+        Texto del pie:
+<input type="text" id="footerText" class="text-input" placeholder="Texto del pie">
+</label>
+<label class="checkbox-label">
+<input type="checkbox" id="enablePageNumbers" checked> Numeración de páginas
+</label>
+<label class="checkbox-label">
+        Nombre del archivo:
+<input type="text" id="fileName" class="text-input" value="documento-editado">
+</label>
+</div>
+
+
+<button type="button" id="btnExportPDF" class="primary-btn" style="margin-top:16px;">Exportar como PDF</button>
+<p id="statusMsg" class="detected-msg"></p>
+</div>
+<script src="js/cropper.js"></script>
+<script src="js/editor-pdf.js"></script>
+</body>
+</html>
